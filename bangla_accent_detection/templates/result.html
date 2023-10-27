@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="src/css/dashboard.css" />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <title>ECM Dashboard</title>
+  </head>
+  <body>
+    <div id="page_wrapper">
+      <div id="sidenav" class="sidenav">
+        <div class="sidenav_header">
+          <div class="logo_section">
+            <i class="bx bxl-foursquare"></i>
+            <h3>ECM</h3>
+          </div>
+          <a href="main.html" class="sidenav_link">
+            <i class="bx bx-folder"></i>
+            <h3>Make Prediction</h3>
+          </a>
+          <a href="history.html" class="sidenav_link active">
+            <i class="bx bx-file"></i>
+            <h3>History</h3>
+          </a>
+        </div>
+        <div class="sidenav_footer">
+          <a href="#" class="sidenav_link">
+            <i class="bx bx-rocket"></i>
+            <h3>Admin Section</h3>
+          </a>
+        </div>
+
+        <button id="nav_collapse_btn">
+          <i class="bx bxs-chevrons-left"></i>
+        </button>
+      </div>
+
+      <main>
+        <header>
+          <div class="text">
+            <h2>Projects</h2>
+            <p>Overview of the status, progress, and performance of projects</p>
+          </div>
+          <div>
+            <button id="theme_switch">
+              <i class="bx bx-sun"></i>
+            </button>
+          </div>
+        </header>
+        <div class="chart_container">
+          <canvas id="myChart"></canvas>
+        </div>
+      </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.4/dist/boxicons.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
+    <script src="src/js/main.js"></script>
+  </body>
+</html>
