@@ -4,3 +4,6 @@ from django.shortcuts import render
 
 def index(request):
     return render(request, 'index.html')
+
+def make_prediction(request):
+    return render(request, 'main.html')

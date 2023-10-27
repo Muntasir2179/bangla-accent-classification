@@ -16,11 +16,11 @@
         <ion-icon name="grid"></ion-icon>
       </div>
       <div class="logo">
-        <img src="/src/images/logo_picture.png" alt="" />
+        <img src="/static/img/logo_picture.png" alt="" />
         <span>ACM</span>
       </div>
 
-      <a href="main.html" class="btn">Try Now</a>
+      <a href="{% url 'make-prediction' %}" class="btn">Try Now</a>
     </div>
   </div>
 
@@ -39,11 +39,11 @@
           model is able to predict.
         </p>
 
-        <a href="main.html" class="btn mt">Try Now</a>
+        <a href="{% url 'make-prediction' %}" class="btn mt">Try Now</a>
       </div>
 
       <div class="visual">
-        <img src="./src/images/ai-logo.png" alt="" />
+        <img src="/static/img/ai-logo.png" alt="" />
       </div>
     </div>
   </header>
