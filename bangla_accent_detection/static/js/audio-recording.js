@@ -36,6 +36,11 @@ function startRecording() {
   stopButton.disabled = false;
   cancelButton.disabled = false;
 
+  // Removing previous recording and file
+  document.getElementById("recordingsList").innerHTML = "";
+  document.getElementById("recordingFile").value = "";
+  document.getElementById("predictionOperation").style.display = "none";
+
   /*
     	We're using the standard promise based getUserMedia() 
     	https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
@@ -190,6 +195,19 @@ function createDownloadLink(blob) {
             recordingsList.appendChild(li);
 
             console.log("Entered into audio file creation");
+
+            // Creating file from blob
+            const recordingFile = new File([blob], `${filename}.wav`);
+
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(recordingFile);
+
+            const recordingInput = document.getElementById("recordingFile");
+            recordingInput.files = dataTransfer.files;
+
+            // Showing prediction section
+            document.getElementById("predictionOperation").style.display =
+              "block";
 
             // show/hide processing animation
             document.getElementById("recording_processing").style.display =

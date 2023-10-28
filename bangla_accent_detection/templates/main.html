@@ -68,10 +68,7 @@
             </div>
             <div class="action-title">
               <div class="start-recording">
-                <p>
-                  To start recording press the "<strong>Start Recording</strong
-                  >" button and start recording
-                </p>
+                <p>To start recording press the "<strong>Start Recording</strong>" button and start recording</p>
                 <button class="button -blue center" id="recordButton">
                   Start Recording
                 </button>
@@ -333,9 +330,28 @@
           </div>
 
           <div class="after-recoding-section" id="afterRecordingSection">
-            <h1>Recording List</h1>
             <div class="recording-list">
               <ol id="recordingsList"></ol>
+            </div>
+
+            <div class="prediction-operation" id="predictionOperation">
+              <form
+                action="http://localhost:3600/make-prediction"
+                method="post"
+                enctype="multipart/form-data"
+              >
+                <div class="recording-file-wrap">
+                  <input
+                    type="file"
+                    name="recording_file"
+                    id="recordingFile"
+                    hidden
+                  />
+                  <button type="submit" class="button -green">
+                    Make Prediction
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
 

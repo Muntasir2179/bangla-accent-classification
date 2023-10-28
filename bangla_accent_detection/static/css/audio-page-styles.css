@@ -58,10 +58,12 @@ body {
   transition: all 150ms linear;
   opacity: 0.85;
 }
+
 .button:active {
   transition: all 150ms linear;
   opacity: 0.75;
 }
+
 .button:focus {
   outline: 1px dotted #959595;
   outline-offset: -4px;
@@ -71,11 +73,13 @@ body {
   color: #202129;
   background-color: #f2f2f2;
 }
+
 .button.-regular:hover {
   color: #202129;
   background-color: #e1e2e2;
   opacity: 1;
 }
+
 .button.-regular:active {
   background-color: #d5d6d6;
   opacity: 1;
@@ -85,6 +89,7 @@ body {
   color: var(--color-snow);
   background: var(--color-dark);
 }
+
 .button.-dark:focus {
   outline: 1px dotted white;
   outline-offset: -4px;
@@ -141,20 +146,25 @@ nav .logo h2 {
   margin: 0 7%;
   text-align: center;
 }
+
 .main-section .heading h1 {
   margin-top: 3.5rem;
   font-size: 3rem;
 }
+
 .main-section .heading p {
   margin-top: 0.5rem;
   font-size: 1rem;
 }
+
 .main-section .actions {
   margin-top: 2.5rem;
 }
+
 .main-section .actions .action-title {
   margin-top: 1.5rem;
 }
+
 .main-section .actions .action-title .start-recording p {
   font-size: 1rem;
 }
@@ -167,20 +177,24 @@ nav .logo h2 {
   display: flex;
   justify-content: space-evenly;
 }
+
 .main-section .app-details .card-body .card {
   width: 20rem;
   min-height: 10rem;
   border-radius: 0.8rem;
   background-image: linear-gradient(62deg, #8fbfee 0%, #d0aef0 100%);
 }
+
 .main-section .app-details .card-body .card .title {
   margin-top: 1.2rem;
   font-size: 1.3rem;
 }
+
 .main-section .app-details .card-body .card .description {
   margin-top: 1rem;
   font-size: 1rem;
 }
+
 .main-section .app-details .card-body .card .description p {
   text-align: left;
   padding: 0 1.2rem;
@@ -193,88 +207,104 @@ nav .logo h2 {
   width: 100px;
   fill: #416dea;
 }
+
 #Line_1 {
   -webkit-animation: pulse 1s infinite;
   animation: pulse 1s infinite;
   -webkit-animation-delay: 0.15s;
   animation-delay: 0.15s;
 }
+
 #Line_2 {
   -webkit-animation: pulse 1s infinite;
   animation: pulse 1s infinite;
   -webkit-animation-delay: 0.3s;
   animation-delay: 0.3s;
 }
+
 #Line_3 {
   -webkit-animation: pulse 1s infinite;
   animation: pulse 1s infinite;
   -webkit-animation-delay: 0.45s;
   animation-delay: 0.45s;
 }
+
 #Line_4 {
   -webkit-animation: pulse 1s infinite;
   animation: pulse 1s infinite;
   -webkit-animation-delay: 0.6s;
   animation-delay: 0.6s;
 }
+
 #Line_5 {
   -webkit-animation: pulse 1s infinite;
   animation: pulse 1s infinite;
   -webkit-animation-delay: 0.75s;
   animation-delay: 0.75s;
 }
+
 #Line_6 {
   -webkit-animation: pulse 1s infinite;
   animation: pulse 1s infinite;
   -webkit-animation-delay: 0.9s;
   animation-delay: 0.9s;
 }
+
 #Line_7 {
   -webkit-animation: pulse 1s infinite;
   animation: pulse 1s infinite;
   -webkit-animation-delay: 1.05s;
   animation-delay: 1.05s;
 }
+
 #Line_8 {
   -webkit-animation: pulse 1s infinite;
   animation: pulse 1s infinite;
   -webkit-animation-delay: 1.2s;
   animation-delay: 1.2s;
 }
+
 #Line_9 {
   -webkit-animation: pulse 1s infinite;
   animation: pulse 1s infinite;
   -webkit-animation-delay: 1.35s;
   animation-delay: 1.35s;
 }
+
 @-webkit-keyframes pulse {
   0% {
     transform: scaleY(1);
     transform-origin: 50% 50%;
   }
+
   50% {
     transform: scaleY(0.7);
     transform-origin: 50% 50%;
   }
+
   100% {
     transform: scaleY(1);
     transform-origin: 50% 50%;
   }
 }
+
 @keyframes pulse {
   0% {
     transform: scaleY(1);
     transform-origin: 50% 50%;
   }
+
   50% {
     transform: scaleY(0.7);
     transform-origin: 50% 50%;
   }
+
   100% {
     transform: scaleY(1);
     transform-origin: 50% 50%;
   }
 }
+
 /* End of Wave Animation */
 /* ===================== */
 
@@ -309,42 +339,53 @@ nav .logo h2 {
   0% {
     opacity: 1;
   }
+
   50% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
 }
+
 @-webkit-keyframes flashing-recording-dot {
   0% {
     opacity: 1;
   }
+
   50% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
 }
+
 @-moz-keyframes flashing-recording-dot {
   0% {
     opacity: 1;
   }
+
   50% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
 }
+
 @-o-keyframes flashing-recording-dot {
   0% {
     opacity: 1;
   }
+
   50% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
@@ -355,10 +396,12 @@ nav .logo h2 {
 .text-indication-of-audio-playing-container {
   height: 20px;
 }
+
 .text-indication-of-audio-playing {
   font-size: 20px;
   line-height: 19px;
 }
+
 /* 3 Dots animation*/
 .text-indication-of-audio-playing span {
   /*transitions with Firefox, IE and Opera Support browser support*/
@@ -375,82 +418,101 @@ nav .logo h2 {
   -moz-animation-iteration-count: infinite;
   -o-animation-iteration-count: infinite;
 }
+
 .text-indication-of-audio-playing span:nth-child(2) {
   animation-delay: 0.4s;
   -webkit-animation-delay: 0.4s;
   -moz-animation-delay: 0.4s;
   -o-animation-delay: 0.4s;
 }
+
 .text-indication-of-audio-playing span:nth-child(3) {
   animation-delay: 0.8s;
   -webkit-animation-delay: 0.8s;
   -moz-animation-delay: 0.8s;
   -o-animation-delay: 0.8s;
 }
+
 /* The animation code */
 @keyframes blinking-dot {
   0% {
     opacity: 0;
   }
+
   50% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
   }
 }
+
 /* The animation code */
 @-webkit-keyframes blinking-dot {
   0% {
     opacity: 0;
   }
+
   50% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
   }
 }
+
 /* The animation code */
 @-moz-keyframes blinking-dot {
   0% {
     opacity: 0;
   }
+
   50% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
   }
 }
+
 /* The animation code */
 @-o-keyframes blinking-dot {
   0% {
     opacity: 0;
   }
+
   50% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
   }
 }
+
 .no-recording-section {
   height: 20px;
 }
+
 .no-recording-section p {
   font-size: 20px;
   line-height: 19px;
 }
+
 /* End of Loading Animation */
 /* ======================== */
 .after-recoding-section {
   margin: 40px 0;
 }
+
 .after-recoding-section h1 {
   font-size: 32px;
   text-decoration: underline;
 }
+
 .recording-status {
   display: inline-block;
   padding: 10px;
@@ -462,9 +524,11 @@ nav .logo h2 {
 #timerWrapper {
   width: 100px;
 }
+
 #timerMins {
   margin-right: -8px;
 }
+
 #timerSeconds {
   margin-left: -8px;
 }
@@ -494,6 +558,7 @@ nav .logo h2 {
   width: 25rem;
   margin-right: 15px;
 }
+
 .recording-list a {
   margin-left: 15px;
   font-size: 1.5rem;
@@ -547,7 +612,7 @@ nav .logo h2 {
   color: var(--text);
 }
 
-.sidenav_link:hover > h3,
+.sidenav_link:hover>h3,
 .sidenav_link:hover i {
   color: var(--text);
 }
@@ -586,7 +651,7 @@ nav .logo h2 {
   cursor: pointer;
 }
 
-#nav_collapse_btn > i {
+#nav_collapse_btn>i {
   color: var(--text);
   font-size: 18px;
   margin-left: 8px;

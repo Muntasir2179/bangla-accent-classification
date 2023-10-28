@@ -161,7 +161,7 @@ app.get("/", (req, res) => {
 });
 
 app.post("/audio-processing", async (req, res) => {
-  console.log(req.files.audio);
+  console.log(req.files.audio.name + "  Size:  " + req.files.audio.size);
 
   const result = await cloudinary.uploader.upload(
     req.files.audio.tempFilePath,
@@ -189,6 +189,11 @@ app.post("/audio-processing", async (req, res) => {
       .status(StatusCodes.BAD_REQUEST)
       .json({ error: "Audio not enhanced" });
   }
+});
+
+app.post("/make-prediction", async (req, res) => {
+  console.log("Make Prediction Files");
+  console.log(req.files.recording_file);
 });
 
 // middleware
