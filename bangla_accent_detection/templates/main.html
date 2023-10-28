@@ -336,10 +336,11 @@
 
             <div class="prediction-operation" id="predictionOperation">
               <form
-                action="http://localhost:3600/make-prediction"
+                action="{% url "make-prediction" %}"
                 method="post"
                 enctype="multipart/form-data"
               >
+                {% csrf_token %}
                 <div class="recording-file-wrap">
                   <input
                     type="file"
