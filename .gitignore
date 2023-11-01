@@ -1,3 +1,5 @@
 bangla_accent_detection/media/
 bangla_accent_detection/dashboard/__pycache__/
 bangla_accent_detection/bangla_accent_detection/__pycache__/
+account.txt
+bangla_accent_detection/db.sqlite3

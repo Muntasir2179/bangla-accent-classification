@@ -31,7 +31,7 @@
             <i class="bx bxl-foursquare"></i>
             <h3>ACM</h3>
           </div>
-          <a href="main.html" class="sidenav_link">
+          <a href="{% url "make-prediction" %}" class="sidenav_link">
             <i class="bx bx-folder"></i>
             <h3>Make Prediction</h3>
           </a>
@@ -41,7 +41,7 @@
           </a>
         </div>
         <div class="sidenav_footer">
-          <a href="#" class="sidenav_link">
+          <a href="/admin" class="sidenav_link">
             <i class="bx bx-rocket"></i>
             <h3>Admin Section</h3>
           </a>
@@ -136,7 +136,7 @@
                     {% endfor %}
                     </select>
                 </div>
-                <input class="form-control" type="text" value="{{predicted_class}}" name="model_prediction">
+                <input class="form-control" type="text" value="{{predicted_class}}" name="predicted_class">
                 <input class="form-control" type="text" value="{{file_name}}" name="file_name">
                 <input type="number" step="any" value="{{prediction_confidence}}" name="prediction_confidence">
                 {% for key, value in probability_dict.items %}

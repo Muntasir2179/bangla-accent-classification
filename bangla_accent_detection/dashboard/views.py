@@ -1,13 +1,20 @@
-from django.shortcuts import render
-from .models import Document
+from django.shortcuts import render, redirect
+from .models import Document, AccentData
 
 # dependencies for trained model
 import tensorflow as tf
 import pickle
 import numpy as np
 import librosa
-import os
-import send2trash as st
+
+
+# functions for handling model and audio features
+# loading the model and making prediction
+def predict_accent(features):
+    model = tf.keras.models.load_model('models/ANN_Model_val_acc_90%.h5')
+    prediction_probabilities = model.predict(features.reshape(-1, 128), verbose=0)
+    prediction_probabilities = prediction_probabilities.squeeze()  # removing single dimension
+    return prediction_probabilities
 
 # audio feature extractor function
 def features_extractor(file_name):
@@ -16,8 +23,10 @@ def features_extractor(file_name):
     mfccs_scaled_features = np.mean(mfccs_features.T,axis=0)
     return mfccs_scaled_features
 
-# Create your views here.
 
+
+# functions for request handling
+# Create your views here.
 def index(request):
     return render(request, 'index.html')
 
@@ -48,10 +57,8 @@ def make_prediction(request):
             # extracting features from the enhanced audio file
             features = features_extractor(audio_path).reshape(-1, 128)
 
-            # loading the trained model and making prediction on users input voice
-            model = tf.keras.models.load_model('models/ANN_Model_val_acc_90%.h5')
-            prediction_probabilities = model.predict(features.reshape(-1, 128), verbose=0)
-            prediction_probabilities = prediction_probabilities.squeeze()  # removing single dimension
+            # making prediction on users input voice
+            prediction_probabilities = predict_accent(features=features)
 
             # converting the result into onehot representation
             one_hot_output = np.zeros(len(prediction_probabilities))
@@ -86,5 +93,37 @@ def make_prediction(request):
     return render(request, 'result.html', context=context)
 
 
+# saving prediction details to the database
 def feedback(request):
-    pass
+    # creating a database object
+    accent_data = AccentData()
+
+    # fetching data
+    accent_data.file_name = request.POST.get('file_name')
+    accent_data.predicted_accent = request.POST.get('predicted_class')
+    accent_data.predicted_accent_confidence = request.POST.get('prediction_confidence')
+
+    # confidence of each accent
+    accent_data.barishal_conf = request.POST.get('barishal')
+    accent_data.bogura_conf = request.POST.get('bogura')
+    accent_data.chottogram_conf = request.POST.get('chottogram')
+    accent_data.kurigram_conf = request.POST.get('kurigram')
+    accent_data.madaripur_conf = request.POST.get('madaripur')
+    accent_data.mymenshing_conf = request.POST.get('maymenshing')
+    accent_data.noakhali_conf = request.POST.get('noakhali')
+    accent_data.pabna_conf = request.POST.get('pabna')
+    accent_data.puran_dhaka_conf = request.POST.get('puran dhaka')
+    accent_data.rajshahi_conf = request.POST.get('rajshahi')
+    accent_data.shatkhira_conf = request.POST.get('shatkhira')
+    accent_data.sylhet_conf = request.POST.get('sylhet')
+    accent_data.tahurgaon_conf = request.POST.get('thakurgaon')
+
+    model_prediction = request.POST.get('predicted_class')
+    string = ''
+    for i in model_prediction:
+        if i.isalpha():
+            string += i
+
+    accent_data.is_correct_prediction = (string == request.POST.get('predicted_class'))
+    accent_data.save()
+    return redirect('recording-page')
