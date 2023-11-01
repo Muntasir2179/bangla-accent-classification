@@ -37,6 +37,10 @@ body {
   display: none;
 }
 
+.prediction-operation {
+  display: none;
+}
+
 .button {
   overflow: hidden;
   margin: 1rem;

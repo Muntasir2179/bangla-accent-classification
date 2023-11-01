@@ -1,26 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <title>Speech Dinoising</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="/static/css/audio-page-styles.css"
-    />
+    <link rel="stylesheet" type="text/css" href="/static/css/audio-page-styles.css"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link
-      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
   </head>
   <body>
     <!-- <nav>
@@ -61,19 +48,55 @@
           <h1>Voice Recorder</h1>
           <p>Try Recording Your Sound Now</p>
         </div>
+        <style>
+          .recording-wrapper{
+            display: flex;
+            width: 100%;
+          }
+          .width-50{
+            width: 50%;
+          }
+        </style>
         <div class="actions">
           <div class="start-recoding-section" id="startRecordingSection">
-            <div class="action-logo">
-              <img src="/static/img/main-icon.png" alt="" />
-            </div>
-            <div class="action-title">
-              <div class="start-recording">
-                <p>To start recording press the "<strong>Start Recording</strong>" button and start recording</p>
-                <button class="button -blue center" id="recordButton">
-                  Start Recording
-                </button>
+            <div class="recording-wrapper">
+              <div class="width-50">
+                <div class="action-logo">
+                  <img src="/static/img/main-icon.png" alt="" />
+                </div>
+                <div class="action-title">
+                  <div class="start-recording">
+                    <p>To start recording press the "<strong>Start Recording</strong>" button and start recording</p>
+                    <button class="button -blue center" id="recordButton">
+                      Start Recording
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="width-50">
+                <div class="action-logo">
+                  <img src="/static/img/upload-icon.png" alt="" />
+                </div>
+                <div class="action-title">
+                  <div class="start-recording">
+                    <form
+                    action="{% url "make-prediction" %}"
+                    method="post"
+                    enctype="multipart/form-data">
+                    {% csrf_token %}
+                      <div class="recording-file-wrap">
+                        <input type="file" name="upload_file" id="upload_file" required />
+                        <br>
+                        <button type="submit" class="button -green">
+                          Upload Recoding
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
               </div>
             </div>
+            
           </div>
 
           <div

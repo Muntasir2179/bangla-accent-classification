@@ -26,12 +26,15 @@ def recording_page(request):
 
 def make_prediction(request):
     if request.method == "POST":
-        if not 'recording_file' in request.FILES:
+        if not 'recording_file' in request.FILES or not 'upload_file' in request.FILES:
             title_text = "There is no audio input."
             prediction_probabilities = np.zeros(13)
 
         # getting the audio file
-        audio = request.FILES['recording_file']
+        if 'recording_file' in request.FILES:
+            audio = request.FILES['recording_file']
+        elif 'upload_file' in request.FILES:
+            audio = request.FILES['upload_file']
         audio_file = Document.objects.create(name=audio.name, file=audio)   # saving an audio file by creating an Document object
         audio_path = audio_file.file.path
 
@@ -81,3 +84,7 @@ def make_prediction(request):
         }
 
     return render(request, 'result.html', context=context)
+
+
+def feedback(request):
+    pass

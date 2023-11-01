@@ -22,15 +22,15 @@ function startRecording() {
   console.log("recordButton clicked");
 
   /*
-		Simple constraints object, for more advanced audio features see
-		https://addpipe.com/blog/audio-constraints-getusermedia/
-	*/
+    Simple constraints object, for more advanced audio features see
+    https://addpipe.com/blog/audio-constraints-getusermedia/
+  */
 
   var constraints = { audio: true, video: false };
 
   /*
-    	Disable the record button until we get a success or fail from getUserMedia() 
-	*/
+      Disable the record button until we get a success or fail from getUserMedia() 
+  */
 
   recordButton.disabled = true;
   stopButton.disabled = false;
@@ -42,9 +42,9 @@ function startRecording() {
   document.getElementById("predictionOperation").style.display = "none";
 
   /*
-    	We're using the standard promise based getUserMedia() 
-    	https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
-	*/
+      We're using the standard promise based getUserMedia() 
+      https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
+  */
 
   navigator.mediaDevices
     .getUserMedia(constraints)
@@ -139,6 +139,10 @@ function stopRecording() {
   clearInterval(timerInterval);
   resetTimer();
 
+  // // set start recording button disabled
+  document.getElementById("recordButton").disabled = true;
+
+
   //create the wav blob and pass it on to createDownloadLink
   rec.exportWAV(createDownloadLink);
 
@@ -178,18 +182,18 @@ function createDownloadLink(blob) {
             au.src = url;
 
             //save to disk link
-            link.href = url;
-            link.download = filename + ".wav"; //download forces the browser to download the file using the  filename
-            link.innerHTML = "<i class='fa-solid fa-download'></i>";
+            //link.href = url;
+            //link.download = filename + ".wav"; //download forces the browser to download the file using the  filename
+            //link.innerHTML = "<i class='fa-solid fa-download'></i>";
 
             //add the new audio element to li
             li.appendChild(au);
 
             //add the filename to the li
-            li.appendChild(document.createTextNode(filename + ".wav "));
+            // li.appendChild(document.createTextNode(filename + ".wav "));
 
             //add the save to disk link to li
-            li.appendChild(link);
+            // li.appendChild(link);
 
             //add the li element to the ol
             recordingsList.appendChild(li);

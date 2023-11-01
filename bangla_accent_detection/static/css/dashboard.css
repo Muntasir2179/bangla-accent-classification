@@ -9,6 +9,8 @@
 
 * {
   box-sizing: border-box;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
 }
 
 body {
@@ -32,7 +34,7 @@ body {
   display: flex;
   flex-direction: column;
   position: relative;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 }
 
 .sidenav_link {
@@ -57,7 +59,7 @@ body {
   color: var(--text);
 }
 
-.sidenav_link:hover > h3,
+.sidenav_link:hover>h3,
 .sidenav_link:hover i {
   color: var(--text);
 }
@@ -96,7 +98,7 @@ body {
   cursor: pointer;
 }
 
-#nav_collapse_btn > i {
+#nav_collapse_btn>i {
   color: var(--text);
   font-size: 18px;
   margin-left: 8px;
@@ -109,12 +111,12 @@ body {
 
 h3 {
   color: var(--text);
-  font-size: 16px;
+  font-size: 16px !important;
   letter-spacing: 0.5px;
 }
 
 a {
-  text-decoration: none;
+  text-decoration: none !important;
 }
 
 .bx-calendar {
@@ -179,8 +181,8 @@ p {
 }
 
 .chart_container {
-  width: 90%;
-  max-width: 600px;
+  width: 100%;
+  /* max-width: 600px; */
   background-color: var(--accent-light);
   border-radius: 12px;
   padding: 30px;

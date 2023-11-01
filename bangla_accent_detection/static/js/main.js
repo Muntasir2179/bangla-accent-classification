@@ -39,7 +39,7 @@ var completedTasksChart = new Chart(myChart, {
 //Creating the dark/light mode toggle
 
 let darkMode = localStorage.getItem("dark_mode");
-var toggleBtn = document.querySelector("#theme_switch");
+// var toggleBtn = document.querySelector("#theme_switch");
 
 const enableDarkMode = () => {
   document.body.classList.add("dark_mode");
@@ -53,12 +53,12 @@ const disableDarkMode = () => {
   console.log("null");
 };
 
-toggleBtn.addEventListener("click", () => {
-  darkMode = localStorage.getItem("darkMode");
+// toggleBtn.addEventListener("click", () => {
+//   darkMode = localStorage.getItem("darkMode");
 
-  if (darkMode !== "enabled") {
-    enableDarkMode();
-  } else {
-    disableDarkMode();
-  }
-});
+//   if (darkMode !== "enabled") {
+//     enableDarkMode();
+//   } else {
+//     disableDarkMode();
+//   }
+// });
