@@ -127,3 +127,7 @@ def feedback(request):
     accent_data.is_correct_prediction = (string == request.POST.get('predicted_class'))
     accent_data.save()
     return redirect('recording-page')
+
+
+def prediction_history(request):
+    return render(request, 'history.html')
