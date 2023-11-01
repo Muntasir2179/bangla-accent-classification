@@ -6,6 +6,8 @@ import tensorflow as tf
 import pickle
 import numpy as np
 import librosa
+import os
+import send2trash as st
 
 # audio feature extractor function
 def features_extractor(file_name):
@@ -25,7 +27,7 @@ def recording_page(request):
 def make_prediction(request):
     if request.method == "POST":
         if not 'recording_file' in request.FILES:
-            text = "There is no audio input."
+            title_text = "There is no audio input."
             prediction_probabilities = np.zeros(13)
 
         # getting the audio file
@@ -38,7 +40,7 @@ def make_prediction(request):
                 encoder = pickle.load(f)
 
         try:
-            title_text = "Prediction probabilities for each accent."
+            title_text = "Prediction probabilities for each accent"
 
             # extracting features from the enhanced audio file
             features = features_extractor(audio_path).reshape(-1, 128)
@@ -54,31 +56,28 @@ def make_prediction(request):
             
             # getting the predicted class name
             predicted_class = encoder.inverse_transform(one_hot_output.reshape(1, -1)).squeeze()
+            # getting prediction confidence
+            prediction_confidence = prediction_probabilities[np.argmax(prediction_probabilities)]
         except Exception as e:
-            title_text = "There is no audio input."
+            title_text = "There is no audio input"
             prediction_probabilities = np.zeros(13)
             predicted_class = None
-
-        print()
-        print(predicted_class)
-        print()
+            prediction_confidence = -1
 
         # getting all classes names from the encoder
         all_class_names = [class_name.replace('x0_', '') for class_name in  encoder.get_feature_names_out()]
 
         # creating dictionary of class and their corresponding probability score
         probability_dict = dict(zip(all_class_names, prediction_probabilities))
-        for key, value in probability_dict.items():
-            print(f"{key} : {value}")
-        print()
 
         context = {
-            'text': title_text,
+            'title_text': title_text,
             'file_name': audio_path,
             'labels': [key for key, _ in probability_dict.items()],
             'probability': [value for _, value in probability_dict.items()],
             'probability_dict': probability_dict,
-            'predicted_class': predicted_class
+            'predicted_class': predicted_class,
+            'prediction_confidence': prediction_confidence,
         }
 
     return render(request, 'result.html', context=context)

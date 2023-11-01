@@ -41,8 +41,7 @@
       <main>
         <header>
           <div class="text">
-            <h2>Projects</h2>
-            <p>Overview of the status, progress, and performance of projects</p>
+            <h3>{{title_text}}</h3>
           </div>
           <div>
             <button id="theme_switch">
@@ -107,11 +106,33 @@
             });
           </script>
         </div>
+
+        <div class="col-md-4">
+          <form action="/feedback/" method="POST">
+              {% csrf_token %}
+              <legend>User Feedback</legend>
+              <div class="form-group">
+                  <select id="disabledSelect" class="form-control" name="user_prediction" required>
+                  <option value="" selected disabled>Select the correct prediction</option>
+                  {% for key, _ in probability_dict.items %}
+                  <option value="{{key}}">{{key}}</option>
+                  {% endfor %}
+                  </select>
+              </div>
+              <input class="form-control" type="text" value="{{predicted_class}}" name="model_prediction">
+              <input class="form-control" type="text" value="{{file_name}}" name="file_name">
+              <input type="number" step="any" value="{{prediction_confidence}}" name="prediction_confidence">
+              {% for key, value in probability_dict.items %}
+              <input type="number" step="any" value="{{value}}" name="{{key}}">
+              {% endfor %}
+              <button type="submit" class="btn btn-success btn-lg">Submit</button>
+          </form>
+        </div>
+
       </main>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.4/dist/boxicons.js"></script>
-    {% comment %} <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script> {% endcomment %}
     <script src="/static/js/main.js"></script>
   </body>
 </html>
