@@ -21,9 +21,9 @@
           <i class="bx bxl-foursquare"></i>
           <h3>ACM</h3>
         </div>
-        <a href="{% url "make-prediction" %}" class="sidenav_link">
+        <a href="{% url "recording-page" %}" class="sidenav_link">
           <i class="bx bx-folder"></i>
-          <h3>Make Prediction</h3>
+          <h3>Recording Page</h3>
         </a>
         <a href="{% url "prediction-history" %}" class="sidenav_link active">
           <i class="bx bx-file"></i>
@@ -48,23 +48,27 @@
         <table id="example" class="display nowrap" style="width: 100%">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Position</th>
-              <th>Office</th>
-              <th>Age</th>
-              <th>Start date</th>
-              <th>Salary</th>
+              <th>File Name</th>
+              <th>Predicted Accent</th>
+              <th>Confidence</th>
+              <th>User Feedback</th>
+              <th>Correct/Wrong</th>
             </tr>
           </thead>
           <tbody>
+            {% for item in data %}
             <tr>
-              <td>Tiger Nixon</td>
-              <td>System Architect</td>
-              <td>Edinburgh</td>
-              <td>61</td>
-              <td>2011-04-25</td>
-              <td>$320,800</td>
+              <td>{{item.file_name}}</td>
+              <td>{{item.predicted_accent}}</td>
+              <td>{{item.predicted_accent_confidence}}</td>
+              <td>{{item.user_prediction}}</td>
+              {% if item.is_correct_prediction %}
+              <td>✅</td>
+              {% else %}
+              <td>❌</td>
+              {% endif %}
             </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>

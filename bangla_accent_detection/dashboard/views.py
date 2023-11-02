@@ -12,17 +12,20 @@ import librosa
 # loading the model and making prediction
 def predict_accent(features):
     model = tf.keras.models.load_model('models/ANN_Model_val_acc_90%.h5')
-    prediction_probabilities = model.predict(features.reshape(-1, 128), verbose=0)
-    prediction_probabilities = prediction_probabilities.squeeze()  # removing single dimension
+    prediction_probabilities = model.predict(
+        features.reshape(-1, 128), verbose=0)
+    # removing single dimension
+    prediction_probabilities = prediction_probabilities.squeeze()
     return prediction_probabilities
 
 # audio feature extractor function
+
+
 def features_extractor(file_name):
     audio, sample_rate = librosa.load(file_name, res_type='kaiser_fast')
     mfccs_features = librosa.feature.mfcc(y=audio, sr=sample_rate, n_mfcc=128)
-    mfccs_scaled_features = np.mean(mfccs_features.T,axis=0)
+    mfccs_scaled_features = np.mean(mfccs_features.T, axis=0)
     return mfccs_scaled_features
-
 
 
 # functions for request handling
@@ -30,8 +33,10 @@ def features_extractor(file_name):
 def index(request):
     return render(request, 'index.html')
 
+
 def recording_page(request):
     return render(request, 'main.html')
+
 
 def make_prediction(request):
     if request.method == "POST":
@@ -44,12 +49,13 @@ def make_prediction(request):
             audio = request.FILES['recording_file']
         elif 'upload_file' in request.FILES:
             audio = request.FILES['upload_file']
-        audio_file = Document.objects.create(name=audio.name, file=audio)   # saving an audio file by creating an Document object
+        # saving an audio file by creating an Document object
+        audio_file = Document.objects.create(name=audio.name, file=audio)
         audio_path = audio_file.file.path
 
         # loading the onehot encoder
         with open('models/onehot_encoder_accent_classification.pkl', 'rb') as f:
-                encoder = pickle.load(f)
+            encoder = pickle.load(f)
 
         try:
             title_text = "Prediction probabilities for each accent"
@@ -63,11 +69,13 @@ def make_prediction(request):
             # converting the result into onehot representation
             one_hot_output = np.zeros(len(prediction_probabilities))
             one_hot_output[np.argmax(prediction_probabilities)] = 1.0
-            
+
             # getting the predicted class name
-            predicted_class = encoder.inverse_transform(one_hot_output.reshape(1, -1)).squeeze()
+            predicted_class = encoder.inverse_transform(
+                one_hot_output.reshape(1, -1)).squeeze()
             # getting prediction confidence
-            prediction_confidence = prediction_probabilities[np.argmax(prediction_probabilities)]
+            prediction_confidence = prediction_probabilities[np.argmax(
+                prediction_probabilities)]
         except Exception as e:
             title_text = "There is no audio input"
             prediction_probabilities = np.zeros(13)
@@ -75,7 +83,8 @@ def make_prediction(request):
             prediction_confidence = -1
 
         # getting all classes names from the encoder
-        all_class_names = [class_name.replace('x0_', '') for class_name in  encoder.get_feature_names_out()]
+        all_class_names = [class_name.replace(
+            'x0_', '') for class_name in encoder.get_feature_names_out()]
 
         # creating dictionary of class and their corresponding probability score
         probability_dict = dict(zip(all_class_names, prediction_probabilities))
@@ -101,7 +110,8 @@ def feedback(request):
     # fetching data
     accent_data.file_name = request.POST.get('file_name')
     accent_data.predicted_accent = request.POST.get('predicted_class')
-    accent_data.predicted_accent_confidence = request.POST.get('prediction_confidence')
+    accent_data.predicted_accent_confidence = request.POST.get(
+        'prediction_confidence')
 
     # confidence of each accent
     accent_data.barishal_conf = request.POST.get('barishal')
@@ -124,10 +134,15 @@ def feedback(request):
         if i.isalpha():
             string += i
 
-    accent_data.is_correct_prediction = (string == request.POST.get('predicted_class'))
+    accent_data.is_correct_prediction = (
+        string == request.POST.get('predicted_class'))
     accent_data.save()
     return redirect('recording-page')
 
 
 def prediction_history(request):
-    return render(request, 'history.html')
+    data = AccentData.objects.all()
+    context = {
+        'data': data
+    }
+    return render(request, 'history.html', context=context)
