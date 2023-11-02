@@ -105,11 +105,11 @@
                     {% endfor %}
                     </select>
                 </div>
-                <input class="form-control" type="text" value="{{predicted_class}}" name="predicted_class">
-                <input class="form-control" type="text" value="{{file_name}}" name="file_name">
-                <input type="number" step="any" value="{{prediction_confidence}}" name="prediction_confidence">
+                <input class="form-control" type="text" value="{{predicted_class}}" name="predicted_class" hidden>
+                <input class="form-control" type="text" value="{{file_name}}" name="file_name" hidden>
+                <input type="number" step="any" value="{{prediction_confidence}}" name="prediction_confidence" hidden>
                 {% for key, value in probability_dict.items %}
-                <input type="number" step="any" value="{{value}}" name="{{key}}">
+                <input type="number" step="any" value="{{value}}" name="{{key}}" hidden>
                 {% endfor %}
                 <br>
                 <button type="submit" class="btn btn-success btn-lg mt-2">Submit</button>
