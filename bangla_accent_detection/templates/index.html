@@ -1,66 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "partials/base.html" %}
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Accent Classification</title>
-  <link rel="stylesheet" href="/static/css/style.css"/>
-</head>
+{% block title %}Accent Classification{% endblock title %}
 
-<body>
-  <div class="menu">
-    <div class="container flex">
-      <div class="mobile-btn">
-        <ion-icon name="grid"></ion-icon>
-      </div>
-      <div class="logo">
-        <img src="/static/img/logo_picture.png" alt="" />
-        <span>ACM</span>
-      </div>
+{% block content %}
+<header class="header">
+  <div class="container flex">
+    <div class="text">
+      <h1 class="mb">
+        Introducing <span>Accent</span><br />
+        Classification Model
+      </h1>
+      <p class="mb sub-heading">
+        We have trained a several Deep Leading Model on a dataset. We have created our own audio accent dataset.
+        <br />The models we trained are <strong>Artificial Neural Network (ANN)</strong> and
+        <strong>Long Short Term Memory (LSTM)</strong>. <br />The ANN model has shown better accuracy.
+        The trained model can now predict accent from a audio data. <br />There are several types of accents that the
+        model is able to predict.
+      </p>
 
-      <a href="{% url 'recording-page' %}" class="btn">Try Now</a>
+      <a href="{% url 'recording-page' %}" class="btn mt">Try Now</a>
+    </div>
+
+    <div class="visual">
+      <img src="/static/img/ai-logo.png" alt=""/>
     </div>
   </div>
+</header>
 
-  <header class="header">
-    <div class="container flex">
-      <div class="text">
-        <h1 class="mb">
-          Introducing <span>Accent</span><br />
-          Classification Model
-        </h1>
-        <p class="mb sub-heading">
-          We have trained a several Deep Leading Model on a dataset. We have created our own audio accent dataset.
-          <br />The models we trained are <strong>Artificial Neural Network (ANN)</strong> and
-          <strong>Long Short Term Memory (LSTM)</strong>. <br />The ANN model has shown better accuracy.
-          The trained model can now predict accent from a audio data. <br />There are several types of accents that the
-          model is able to predict.
-        </p>
-
-        <a href="{% url 'recording-page' %}" class="btn mt">Try Now</a>
-      </div>
-
-      <div class="visual">
-        <img src="/static/img/ai-logo.png" alt="" />
-      </div>
-    </div>
-  </header>
-
-  <footer class="footer">
-    <div class="container flex">
-      <p class="tertiary">&copy; 2023 ACM. All Rights Reserved.</p>
-    </div>
-  </footer>
-
-  <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
-  <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
-  <script>
-    document.querySelector(".mobile-btn").addEventListener("click", function () {
-      document.querySelector(".menu").classList.toggle("active");
-    });
-  </script>
-</body>
-
-</html>
+<footer class="footer">
+  <div class="container flex">
+    <p class="tertiary">&copy; 2023 ACM. All Rights Reserved.</p>
+  </div>
+</footer>
+{% endblock content %}
