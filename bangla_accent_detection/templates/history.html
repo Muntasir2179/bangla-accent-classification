@@ -15,33 +15,7 @@
 
 <body>
   <div id="page_wrapper">
-    <div id="sidenav" class="sidenav">
-      <div class="sidenav_header">
-        <div class="logo_section">
-          <i class="bx bxl-foursquare"></i>
-          <h3>ACM</h3>
-        </div>
-        <a href="{% url "recording-page" %}" class="sidenav_link">
-          <i class="bx bx-folder"></i>
-          <h3>Recording Page</h3>
-        </a>
-        <a href="{% url "prediction-history" %}" class="sidenav_link active">
-          <i class="bx bx-file"></i>
-          <h3>History</h3>
-        </a>
-      </div>
-      <div class="sidenav_footer">
-        <a href="/admin" class="sidenav_link">
-          <i class="bx bx-rocket"></i>
-          <h3>Admin Section</h3>
-        </a>
-      </div>
-
-      <button id="nav_collapse_btn">
-        <i class="bx bxs-chevrons-left"></i>
-      </button>
-    </div>
-
+    {% include "partials/sidebar.html" %}
     <main>
       <div class="history-wrapper">
         <h1>Prediction History</h1>

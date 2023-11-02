@@ -1,45 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% block styles %}{% endblock styles %}
-    <title>{% block title %}{% endblock title %}</title>
-</head>
-<body>
-    <div class="content-wrapper">
-        <div class="sidebar sidenav">
-            <div class="sidenav_header">
-              <div class="logo_section">
-                <i class="bx bxl-foursquare"></i>
-                <h3>ACM</h3>
-              </div>
-              <a href="{% url "make-prediction" %}" class="sidenav_link active">
-                <i class="bx bx-folder"></i>
-                <h3>Recording Page</h3>
-              </a>
-              <a href="{% url "prediction-history" %}" class="sidenav_link">
-                <i class="bx bx-file"></i>
-                <h3>History</h3>
-              </a>
-            </div>
-            <div class="sidenav_footer">
-              <a href="/admin" class="sidenav_link">
-                <i class="bx bx-rocket"></i>
-                <h3>Admin Section</h3>
-              </a>
-            </div>
-    
-            <button id="nav_collapse_btn">
-              <i class="bx bxs-chevrons-left"></i>
-            </button>
-        </div>
-
-        {% block content %}
-        {% endblock content %}
+<div class="sidebar sidenav">
+    <div class="sidenav_header">
+      <div class="logo_section">
+        <i class="bx bxl-foursquare"></i>
+        <h3>ACM</h3>
+      </div>
+      <a href="{% url "make-prediction" %}" class="sidenav_link active">
+        <i class="bx bx-folder"></i>
+        <h3>Recording Page</h3>
+      </a>
+      <a href="{% url "prediction-history" %}" class="sidenav_link">
+        <i class="bx bx-file"></i>
+        <h3>History</h3>
+      </a>
+    </div>
+    <div class="sidenav_footer">
+      <a href="/admin" class="sidenav_link">
+        <i class="bx bx-rocket"></i>
+        <h3>Admin Section</h3>
+      </a>
     </div>
 
-    {% block scripts %}
-    {% endblock scripts %}
-</body>
-</html>
+    <button id="nav_collapse_btn">
+      <i class="bx bxs-chevrons-left"></i>
+    </button>
+</div>

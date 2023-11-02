@@ -1,21 +1,17 @@
-{% extends "partials/sidebar.html" %}
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8"/>
+    <title>Speech Dinoising</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    {% block styles %}
     <link rel="stylesheet" type="text/css" href="/static/css/audio-page-styles.css"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
-    {% endblock styles %}
-
-    <title>{% block title %}Speech Dinoising{% endblock title %}</title>
   </head>
   <body>
     <div class="content-wrapper">
-      {% block content %}
+      {% include "partials/sidebar.html" %}
       <div class="main-section">
         <div class="heading">
           <h1>Voice Recorder</h1>
@@ -411,12 +407,9 @@
           </div>
         </div>
       </div>
-      {% endblock content %}
     </div>
 
-    {% block scripts %}
     <script src="/static/js/recorder.js"></script>
     <script src="/static/js/audio-recording.js"></script>
-    {% endblock scripts %}
   </body>
 </html>
