@@ -52,7 +52,6 @@ def make_prediction(request):
         # saving an audio file by creating an Document object
         audio_file = Document.objects.create(name=audio.name, file=audio)
         audio_path = audio_file.file.path
-
         # loading the onehot encoder
         with open('models/onehot_encoder_accent_classification.pkl', 'rb') as f:
             encoder = pickle.load(f)
@@ -137,6 +136,7 @@ def feedback(request):
     accent_data.is_correct_prediction = (
         string == request.POST.get('predicted_class'))
     accent_data.save()
+    print(accent_data)
     return redirect('recording-page')
 
 
