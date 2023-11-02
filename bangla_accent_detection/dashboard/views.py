@@ -35,7 +35,7 @@ def index(request):
 
 
 def recording_page(request):
-    return render(request, 'main.html')
+    return render(request, 'recording_page.html')
 
 
 def make_prediction(request):

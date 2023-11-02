@@ -1,48 +1,21 @@
+{% extends "partials/sidebar.html" %}
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8"/>
-    <title>Speech Dinoising</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% block styles %}
     <link rel="stylesheet" type="text/css" href="/static/css/audio-page-styles.css"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    {% endblock styles %}
+
+    <title>{% block title %}Speech Dinoising{% endblock title %}</title>
   </head>
   <body>
-    <!-- <nav>
-      <div class="logo">
-        <img src="src/images/logo-mic.png" alt="Speech Denoising" />
-        <h2>Speech Dinoising</h2>
-      </div>
-    </nav> -->
     <div class="content-wrapper">
-      <div class="sidebar sidenav">
-        <div class="sidenav_header">
-          <div class="logo_section">
-            <i class="bx bxl-foursquare"></i>
-            <h3>ACM</h3>
-          </div>
-          <a href="{% url "make-prediction" %}" class="sidenav_link active">
-            <i class="bx bx-folder"></i>
-            <h3>Recording Page</h3>
-          </a>
-          <a href="{% url "prediction-history" %}" class="sidenav_link">
-            <i class="bx bx-file"></i>
-            <h3>History</h3>
-          </a>
-        </div>
-        <div class="sidenav_footer">
-          <a href="/admin" class="sidenav_link">
-            <i class="bx bx-rocket"></i>
-            <h3>Admin Section</h3>
-          </a>
-        </div>
-
-        <button id="nav_collapse_btn">
-          <i class="bx bxs-chevrons-left"></i>
-        </button>
-      </div>
+      {% block content %}
       <div class="main-section">
         <div class="heading">
           <h1>Voice Recorder</h1>
@@ -438,9 +411,12 @@
           </div>
         </div>
       </div>
+      {% endblock content %}
     </div>
 
+    {% block scripts %}
     <script src="/static/js/recorder.js"></script>
     <script src="/static/js/audio-recording.js"></script>
+    {% endblock scripts %}
   </body>
 </html>
