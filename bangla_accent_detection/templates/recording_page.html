@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8"/>
-    <title>Speech Dinoising</title>
+    <title>Speech Dinoising | ECM Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="/static/css/audio-page-styles.css"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
   </head>
   <body>
-    <div class="content-wrapper">
+    <div class="content-wrapper" id="page_wrapper">
       {% include "partials/sidebar.html" %}
       <div class="main-section">
         <div class="heading">
@@ -18,12 +18,46 @@
           <p>Try Recording Your Sound Now</p>
         </div>
         <style>
+          .collapsed #sidenav {
+            width: 48px;
+            transition: 250ms ease-out;
+          }
+          .sidebar.small-size{
+            width: 70px;
+            transition: 250ms ease-out;
+          }
+          .collapsed #nav_collapse_btn {
+            left: 44px;
+            transition: 250ms ease-out;
+          }
+          .collapsed .external_link {
+            display: none;
+          }
+          .collapsed .sidenav_link {
+            width: 22px;
+          }
+          .collapsed h3 {
+            display: none;
+          }
+          #page_wrapper.collapsed {
+            grid-template-columns: 68px 1fr;
+            transition: 250ms ease-out;
+          }
+
           .recording-wrapper{
             display: flex;
             width: 100%;
+            border: 2px solid black;
+            border-radius: 40px;
+            padding: 40px;
           }
           .width-50{
             width: 50%;
+          }
+          .divider{
+            height: auto;
+            border-right: 2px solid black;
+            width: 1px;
           }
         </style>
         <div class="actions">
@@ -42,6 +76,7 @@
                   </div>
                 </div>
               </div>
+              <div class="divider"></div>
               <div class="width-50">
                 <div class="action-logo">
                   <img src="/static/img/upload-icon.png" alt="" />
@@ -54,7 +89,13 @@
                     enctype="multipart/form-data">
                     {% csrf_token %}
                       <div class="recording-file-wrap">
-                        <input type="file" name="upload_file" id="upload_file" required />
+                        <!-- <input type="file" name="upload_file" id="upload_file" required /> -->
+                        <div class="box">
+                          <input type="file" name="upload_file" id="upload_file" class="inputfile inputfile-2" data-multiple-caption="{count} files selected" multiple />
+                          <label for="upload_file"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                              <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z" />
+                            </svg> <span>Choose a file&hellip;</span></label>
+                        </div>
                         <br>
                         <button type="submit" class="button -green">
                           Upload Recoding
@@ -358,9 +399,6 @@
                 ><span>.</span>
               </p>
             </div>
-            <div class="no-recording-section" id="no_recording">
-              <p>No record to show</p>
-            </div>
           </div>
         </div>
         <div class="app-details">
@@ -411,5 +449,89 @@
 
     <script src="/static/js/recorder.js"></script>
     <script src="/static/js/audio-recording.js"></script>
+
+    <style>
+      /********** File Input Style starts here ********/
+      .inputfile {
+          width: 0.1px;
+          height: 0.1px;
+          opacity: 0;   
+          overflow: hidden;
+          position: absolute;
+          outline: none;
+          z-index: -1;
+      }
+
+      .inputfile + label {
+          max-width: 80%;
+          font-size: 1rem;
+          font-weight: 700;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          cursor: pointer;
+          display: inline-block;
+          overflow: hidden;
+          padding: 0.625rem 1.25rem;
+          outline: none;
+      }
+
+      .no-js .inputfile + label {
+          display: none;
+      }
+
+      .inputfile + label svg {
+          width: 1em;
+          height: 1em;
+          vertical-align: middle;
+          fill: currentColor;
+          margin-top: -0.25em;
+          margin-right: 0.25em;
+      }
+
+      /* Style 2 */
+      .inputfile-2 + label {
+          color: #1a975e;
+          border: 2px solid currentColor;
+      }
+
+      .inputfile-2:focus + label,
+      .inputfile-2.has-focus + label,
+      .inputfile-2 + label:hover {
+          color: #1a975e;
+      }
+      /* Style 2 */
+    </style>
+
+    <script>
+      (function (document, window, index) {
+        var inputs = document.querySelectorAll(".inputfile");
+        Array.prototype.forEach.call(inputs, function (input) {
+          var label = input.nextElementSibling,
+            labelVal = label.innerHTML;
+
+          input.addEventListener("change", function (e) {
+            var fileName = "";
+            if (this.files && this.files.length > 1)
+              fileName = (this.getAttribute("data-multiple-caption") || "").replace(
+                "{count}",
+                this.files.length
+              );
+            else fileName = e.target.value.split("\\").pop();
+
+            if (fileName) label.querySelector("span").innerHTML = fileName;
+            else label.innerHTML = labelVal;
+          });
+
+          // Firefox bug fix
+          input.addEventListener("focus", function () {
+            input.classList.add("has-focus");
+          });
+          input.addEventListener("blur", function () {
+            input.classList.remove("has-focus");
+          });
+        });
+      })(document, window, 0);
+    </script>
+
   </body>
 </html>

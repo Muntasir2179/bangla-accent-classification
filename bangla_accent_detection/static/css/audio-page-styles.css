@@ -1,7 +1,7 @@
 :root {
   --color-dark: #161616;
   --color-ocean: #416dea;
-  --color-grass: #3dd28d;
+  --color-grass: #1a975e;
   --color-snow: #ffffff;
   --color-salmon: #f32c52;
   --color-sun: #feee7d;
@@ -26,8 +26,11 @@ body {
     "Lucida Sans", Arial, sans-serif;
   /* font-family: "Lato", sans-serif; */
   font-size: 10px;
-  background-color: #8ec5fc;
-  background-image: linear-gradient(62deg, #8ec5fc 0%, #e0c3fc 100%);
+  background-color: #ffffff;
+  /* background-color: #8ec5fc;
+  background-image: linear-gradient(62deg, #8ec5fc 0%, #e0c3fc 100%); */
+  /* background-color: #7e848b;
+  background-image: linear-gradient(62deg, #dae2ea 0%, #e4e2e7 100%); */
   height: 100vh;
   /* height: 100%; */
   background-repeat: no-repeat;
@@ -186,7 +189,8 @@ nav .logo h2 {
   width: 20rem;
   min-height: 10rem;
   border-radius: 0.8rem;
-  background-image: linear-gradient(62deg, #8fbfee 0%, #d0aef0 100%);
+  /* background-image: linear-gradient(62deg, #8fbfee 0%, #d0aef0 100%); */
+  background-color: #f2f2f2;
 }
 
 .main-section .app-details .card-body .card .title {
@@ -200,7 +204,7 @@ nav .logo h2 {
 }
 
 .main-section .app-details .card-body .card .description p {
-  text-align: left;
+  text-align: center;
   padding: 0 1.2rem;
 }
 
@@ -521,7 +525,8 @@ nav .logo h2 {
   display: inline-block;
   padding: 10px;
   border-radius: 12px;
-  background-image: linear-gradient(62deg, #8fbfee 0%, #d0aef0 100%);
+  /* background-image: linear-gradient(62deg, #8fbfee 0%, #d0aef0 100%); */
+  background-color: #f2f2f2;
 }
 
 /* Timer Styles Starts  */
@@ -597,7 +602,7 @@ nav .logo h2 {
 .sidenav_link {
   display: flex;
   align-items: center;
-  padding: 10px;
+  padding: 14px 10px;
   margin-bottom: 2px;
 }
 
@@ -616,7 +621,7 @@ nav .logo h2 {
   color: var(--text);
 }
 
-.sidenav_link:hover>h3,
+.sidenav_link:hover > h3,
 .sidenav_link:hover i {
   color: var(--text);
 }
@@ -655,7 +660,7 @@ nav .logo h2 {
   cursor: pointer;
 }
 
-#nav_collapse_btn>i {
+#nav_collapse_btn > i {
   color: var(--text);
   font-size: 18px;
   margin-left: 8px;

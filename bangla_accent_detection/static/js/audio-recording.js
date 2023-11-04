@@ -142,7 +142,6 @@ function stopRecording() {
   // // set start recording button disabled
   document.getElementById("recordButton").disabled = true;
 
-
   //create the wav blob and pass it on to createDownloadLink
   rec.exportWAV(createDownloadLink);
 
@@ -155,7 +154,6 @@ function createDownloadLink(blob) {
   formData.append("audio", blob, "recording.wav");
 
   // show/hide processing animation
-  document.getElementById("no_recording").style.display = "none";
   document.getElementById("recording_processing").style.display = "block";
 
   $.ajax({
@@ -292,12 +290,14 @@ function startTimer() {
 // Sidebar Functions
 //Making the side navigation collapsible
 let wholePage = document.getElementById("page_wrapper");
+let side_bar_id = document.getElementById("side_bar_id");
 let btn = document.getElementById("nav_collapse_btn");
 
 btn.addEventListener("click", collapse);
 
 function collapse() {
   wholePage.classList.toggle("collapsed");
+  side_bar_id.classList.toggle("small-size");
   if (wholePage.classList.contains("collapsed")) {
     btn.innerHTML = "<i class='bx bxs-chevrons-right'></i>";
   } else {

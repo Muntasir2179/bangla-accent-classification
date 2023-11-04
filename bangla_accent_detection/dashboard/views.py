@@ -109,6 +109,7 @@ def feedback(request):
     # fetching data
     accent_data.file_name = request.POST.get('file_name')
     accent_data.predicted_accent = request.POST.get('predicted_class')
+    accent_data.user_prediction = request.POST.get('user_prediction')
     accent_data.predicted_accent_confidence = request.POST.get(
         'prediction_confidence')
 
@@ -127,16 +128,14 @@ def feedback(request):
     accent_data.sylhet_conf = request.POST.get('sylhet')
     accent_data.tahurgaon_conf = request.POST.get('thakurgaon')
 
-    model_prediction = request.POST.get('predicted_class')
-    string = ''
-    for i in model_prediction:
-        if i.isalpha():
-            string += i
+    # string = ''
+    # for i in model_prediction:
+    #     if i.isalpha():
+    #         string += i
 
-    accent_data.is_correct_prediction = (
-        string == request.POST.get('predicted_class'))
+    accent_data.is_correct_prediction = (request.POST.get(
+        'user_prediction') == request.POST.get('predicted_class'))
     accent_data.save()
-    print(accent_data)
     return redirect('recording-page')
 
 

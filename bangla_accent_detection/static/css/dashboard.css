@@ -22,7 +22,7 @@ body {
   height: 100vh;
   display: grid;
   grid-template-columns: 260px 1fr;
-  font-family: "Lato", sans-serif;
+  /* font-family: "Lato", sans-serif; */
   box-sizing: border-box;
   background-color: var(--accent-dark);
 }
@@ -59,7 +59,7 @@ body {
   color: var(--text);
 }
 
-.sidenav_link:hover>h3,
+.sidenav_link:hover > h3,
 .sidenav_link:hover i {
   color: var(--text);
 }
@@ -98,7 +98,7 @@ body {
   cursor: pointer;
 }
 
-#nav_collapse_btn>i {
+#nav_collapse_btn > i {
   color: var(--text);
   font-size: 18px;
   margin-left: 8px;
