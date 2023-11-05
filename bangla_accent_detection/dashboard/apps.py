@@ -12,4 +12,4 @@ class DashboardConfig(AppConfig):
 
 # class for loading the trained model
 class MyAppConfig(AppConfig):
-    model = tf.keras.models.load_model('models/ANN_Model_val_acc_90%.h5')
+    model = tf.keras.models.load_model('models/ANN_Model_val_acc_91%.h5')

@@ -23,14 +23,9 @@ def predict_accent(features):
 
 
 def features_extractor(file_name):
-    time_load = time.time()
     audio, sample_rate = librosa.load(
-        file_name, res_type='kaiser_fast', mono=False, sr=None)
-    print(time.time() - time_load, "Audio loading time")
-
-    time_extraction = time.time()
+        file_name, res_type='kaiser_fast')
     mfccs_features = librosa.feature.mfcc(y=audio, sr=sample_rate, n_mfcc=128)
-    print(time.time() - time_extraction, "Time for feature extraction")
     mfccs_scaled_features = np.mean(mfccs_features.T, axis=0)
     return mfccs_scaled_features
 
@@ -47,15 +42,17 @@ def recording_page(request):
 
 def make_prediction(request):
     if request.method == "POST":
-        if not 'recording_file' in request.FILES or not 'upload_file' in request.FILES:
+        if (not 'recording_file' in request.FILES) and (not 'upload_file' in request.FILES):
             title_text = "There is no audio input."
             prediction_probabilities = np.zeros(13)
 
         # getting the audio file
-        if 'recording_file' in request.FILES:
+        if 'recording_file' in request.FILES and request.FILES['recording_file']:
             audio = request.FILES['recording_file']
-        elif 'upload_file' in request.FILES:
+            print("\nAudio input from recording\n")
+        elif 'upload_file' in request.FILES and request.FILES['upload_file']:
             audio = request.FILES['upload_file']
+            print("\nAudio input from upload\n")
         # saving an audio file by creating an Document object
         audio_file = Document.objects.create(name=audio.name, file=audio)
         audio_path = audio_file.file.path
@@ -64,18 +61,13 @@ def make_prediction(request):
             encoder = pickle.load(f)
 
         try:
-
             title_text = "Prediction probabilities for each accent"
 
-            start_fe = time.time()
             # extracting features from the enhanced audio file
             features = features_extractor(audio_path).reshape(-1, 128)
-            print(time.time() - start_fe, "Time for extraction")
 
-            model_fe = time.time()
             # making prediction on users input voice
             prediction_probabilities = predict_accent(features=features)
-            print(time.time() - model_fe, "Time for prediction")
 
             # converting the result into onehot representation
             one_hot_output = np.zeros(len(prediction_probabilities))
@@ -139,11 +131,6 @@ def feedback(request):
     accent_data.shatkhira_conf = request.POST.get('shatkhira')
     accent_data.sylhet_conf = request.POST.get('sylhet')
     accent_data.tahurgaon_conf = request.POST.get('thakurgaon')
-
-    # string = ''
-    # for i in model_prediction:
-    #     if i.isalpha():
-    #         string += i
 
     accent_data.is_correct_prediction = (request.POST.get(
         'user_prediction') == request.POST.get('predicted_class'))
