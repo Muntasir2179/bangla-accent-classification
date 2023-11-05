@@ -1,17 +1,18 @@
 from django.shortcuts import render, redirect
 from .models import Document, AccentData
+from .apps import MyAppConfig
 
 # dependencies for trained model
-import tensorflow as tf
 import pickle
 import numpy as np
 import librosa
+import time
 
 
 # functions for handling model and audio features
 # loading the model and making prediction
 def predict_accent(features):
-    model = tf.keras.models.load_model('models/ANN_Model_val_acc_90%.h5')
+    model = MyAppConfig.model
     prediction_probabilities = model.predict(
         features.reshape(-1, 128), verbose=0)
     # removing single dimension
@@ -22,8 +23,14 @@ def predict_accent(features):
 
 
 def features_extractor(file_name):
-    audio, sample_rate = librosa.load(file_name, res_type='kaiser_fast')
+    time_load = time.time()
+    audio, sample_rate = librosa.load(
+        file_name, res_type='kaiser_fast', mono=False, sr=None)
+    print(time.time() - time_load, "Audio loading time")
+
+    time_extraction = time.time()
     mfccs_features = librosa.feature.mfcc(y=audio, sr=sample_rate, n_mfcc=128)
+    print(time.time() - time_extraction, "Time for feature extraction")
     mfccs_scaled_features = np.mean(mfccs_features.T, axis=0)
     return mfccs_scaled_features
 
@@ -57,13 +64,18 @@ def make_prediction(request):
             encoder = pickle.load(f)
 
         try:
+
             title_text = "Prediction probabilities for each accent"
 
+            start_fe = time.time()
             # extracting features from the enhanced audio file
             features = features_extractor(audio_path).reshape(-1, 128)
+            print(time.time() - start_fe, "Time for extraction")
 
+            model_fe = time.time()
             # making prediction on users input voice
             prediction_probabilities = predict_accent(features=features)
+            print(time.time() - model_fe, "Time for prediction")
 
             # converting the result into onehot representation
             one_hot_output = np.zeros(len(prediction_probabilities))
