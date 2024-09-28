@@ -114,7 +114,7 @@ We have saved the trained model and loaded back into our django application. We 
 ## Application Demo
 Here is a short video to demonstrate our application in action.
 
-[![Bangla accent classification application demo](http://img.youtube.com/vi/lKkuzOgjCFg/0.jpg)](http://www.youtube.com/watch?v=lKkuzOgjCFg)
+https://github.com/user-attachments/assets/2ab7d44c-818b-45f6-8d58-01ed1c043751
 
 ## Installation Process
 In order to run this application you just need to clone this repository, create an python enviroment and install the requirements.
