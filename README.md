@@ -1,4 +1,3 @@
-v
 # Title: Efficient Classification of Spoken Bengali Accent Using Deep Learning
 
 **A brief description of what this project does and who it's for**
@@ -116,7 +115,7 @@ We have saved the trained model and loaded back into our django application. We 
 Here is a short video to demonstrate our application in action.
 
 <center>
-<video src='docs/project-demo.mp4' type="video/mp4"></video>
+<video src='https://github.com/Muntasir2179/bangla-accent-classification/blob/app-development/docs/project-demo.mp4' type="video/mp4"></video>
 </center>
 
 ## Installation Process
