@@ -10,17 +10,17 @@ predicting accents. In order to make the idea successful, the first and foremost
 thing to be done is to find a dataset that is appropriate for the idea. We have used suitable dataset which contain human voices from different part of Bangladesh. But we couldn't find any. That's why we have started creating our own dataset. There are several methods we have followed in order to create the dataset. Initially we targeted the YouTube videos where people speak in their regional accent. We have used Audacity software to create voice clip. But we realize that it is not enough to create a robust dataset. Then we decided to collect samples from people by recording their voice. We have collected around total 2000 voice samples for thirteen accents. As normal voice recordings contain various noises thus, we have cleaned audio clips with AI Audio Denoising tools. Then Librosa library is used to extract features from audio. We have also applied augmentation on the audio features. This is a very powerful technique that helps model to learn robust features. We have built Artificial Neural Network (ANN) and trained it with the audio features. We have got 97.55% of maximum training accuracy and 90.80% of maximum validation accuracy. Then we fitted the same features into a CNN1D network and we got 89.10% of maximum training accuracy and 80.62% of maximum validation accuracy. CNN2D network has outperformed CNN1D with maximum training accuracy of 98.69% and validation accuracy of 82.58%. On the other hand, LSTM shows the lowest training and validation accuracy of 57.00% and 49.86%. Among these four models, ANN produced state-of-the-art result outperforming other models in every index.
 
 ## Table of contents
-* [Dataset Creation](##datasetcreation)
-* [System Design](##systemdesign)
-    * [Data Preprocessing](###datapreprocessing)
-    * [Feature Extraction](###featureextraction)
-    * [Data Augmentation](###dataaugmentation)
-* [Modeling and Results](##modelingandresults)
-* [Integration with Application](##integrationwithapplication)
-* [Application Demo](##applicationdemo)
-* [Installation Process](##installationprocess)
-* [Technologies Used](##technologiesused)
-* [FAQ](##faq)
+* [Dataset Creation](#dataset-creation)
+* [System Design](#system-design)
+    * [Data Preprocessing](#data-preprocessing)
+    * [Feature Extraction](#feature-extraction)
+    * [Data Augmentation](#data-augmentation)
+* [Modeling and Results](#modeling-and-results)
+* [Integration with Application](#integration-with-application)
+* [Application Demo](#application-demo)
+* [Installation Process](#installation-process)
+* [Technologies Used](#technologies-used)
+* [FAQ](#faq)
 
 
 ## Dataset Creation
@@ -91,6 +91,7 @@ These are the training curves of four models.
 In terms of results, the ANN model achieved a training accuracy of 97.55% and a validation accuracy of 90.80%, making it the top-performing model. The CNN2D model exhibited a high training accuracy of 98.69% but had a lower validation accuracy of 82.58%. CNN1D achieved training and validation accuracies of 89.10% and 80.62%, respectively. In contrast, LSTM underperformed, with a training accuracy of 57.00% and a validation accuracy of 49.86%. Overall, the ANN model outperformed the others, delivering state-of-the-art results for Bengali accent classification.
 
 Here is the table showing evaluation parameter values for each model.
+
 <center>
 
 | Network | Training Accuracy | Test Accuracy | Precision |  Recall  | F1-Score |
