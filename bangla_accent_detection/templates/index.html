@@ -1,0 +1,35 @@
+{% extends "partials/base.html" %}
+
+{% block title %}Accent Classification{% endblock title %}
+
+{% block content %}
+<header class="header">
+  <div class="container flex">
+    <div class="text">
+      <h1 class="mb">
+        Introducing <span>Accent</span><br />
+        Classification Model
+      </h1>
+      <p class="mb sub-heading">
+        We have trained a several Deep Leading Model on a dataset. We have created our own audio accent dataset.
+        <br />The models we trained are <strong>Artificial Neural Network (ANN)</strong> and
+        <strong>Long Short Term Memory (LSTM)</strong>. <br />The ANN model has shown better accuracy.
+        The trained model can now predict accent from a audio data. <br />There are several types of accents that the
+        model is able to predict.
+      </p>
+
+      <a href="{% url 'recording-page' %}" class="btn mt">Try Now</a>
+    </div>
+
+    <div class="visual">
+      <img src="/static/img/ai-logo.png" alt=""/>
+    </div>
+  </div>
+</header>
+
+<footer class="footer">
+  <div class="container flex">
+    <p class="tertiary">&copy; 2023 ACM. All Rights Reserved.</p>
+  </div>
+</footer>
+{% endblock content %}

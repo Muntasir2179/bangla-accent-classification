@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/css/dashboard.css"/>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    
+    <title>Prediction Probabilities | ECM Dashboard</title>
+
+    <style>
+      .sidenav_link i {
+        margin-top:-4px;
+      }
+      .sidenav_link {
+        padding: 10px;
+      }
+      .sidenav_link h3{
+        font-weight: bold;
+        padding-bottom: 0;
+        margin-top: 6px;
+      }
+      .logo_section h3{
+        margin-bottom: 0;
+      }
+    </style>
+
+  </head>
+  <body>
+    <div id="page_wrapper">
+      {% include "partials/sidebar.html" %}
+      <main>
+        <header class="mt-4">
+          <div class="text">
+            <h1>{{title_text}}</h1>
+          </div>
+        </header>
+        <div class="row mt-4">
+          <div class="col-md-9">
+            <div class="chart_container">
+              <canvas id="myChart"></canvas>
+              <script>
+                var ctx = document.getElementById("myChart").getContext("2d");
+                var myChart = new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: [{% for value in labels %}'{{value}}',{% endfor %}],
+                    datasets: [
+                    {
+                        label: "Confidence",
+                        data: [{% for value in probability %} {{value}}, {% endfor %}],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(245, 40, 145, 1)',
+                            'rgba(135, 182, 70, 1)',
+                            'rgba(33, 35, 231, 1)',
+                            'rgba(33, 141, 63, 1)',
+                            'rgba(206, 232, 167, 1)',
+                            'rgba(156, 218, 255, 1)',
+                            'rgba(0, 255, 0, 1)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(245, 40, 145, 1)',
+                            'rgba(135, 182, 70, 1)',
+                            'rgba(33, 35, 231, 1)',
+                            'rgba(33, 141, 63, 1)',
+                            'rgba(206, 232, 167, 1)',
+                            'rgba(156, 218, 255, 1)',
+                            'rgba(0, 255, 0, 1)'
+                        ],
+                        borderWidth: 1
+                    }],
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                },
+                });
+              </script>
+            </div>
+            <div class="generated-feedback mt-4">
+              <h4>Predicted City: <strong>{{predicted_class}}</strong></h4>
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <form action="{% url "feedback" %}" method="POST">
+                {% csrf_token %}
+                <legend>User Feedback</legend>
+                <div class="form-group">
+                    <select id="disabledSelect" class="form-control" name="user_prediction" required>
+                    <option value="" selected disabled>Select the correct prediction</option>
+                    {% for key, _ in probability_dict.items %}
+                    <option value="{{key}}">{{key}}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+                <input class="form-control" type="text" value="{{predicted_class}}" name="predicted_class" hidden>
+                <input class="form-control" type="text" value="{{file_name}}" name="file_name" hidden>
+                <input type="number" step="any" value="{{prediction_confidence}}" name="prediction_confidence" hidden>
+                {% for key, value in probability_dict.items %}
+                <input type="number" step="any" value="{{value}}" name="{{key}}" hidden>
+                {% endfor %}
+                <br>
+
+                <button type="submit" class="btn btn-success btn-lg mt-2">Submit</button>
+            </form>
+          </div>
+        </div>
+
+      </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.4/dist/boxicons.js"></script>
+    <script src="/static/js/main.js"></script>
+  </body>
+</html>

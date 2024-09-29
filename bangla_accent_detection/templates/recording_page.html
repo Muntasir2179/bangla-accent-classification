@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <title>Speech Dinoising | ECM Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="/static/css/audio-page-styles.css"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+  </head>
+  <body>
+    <div class="content-wrapper" id="page_wrapper">
+      {% include "partials/sidebar.html" %}
+      <div class="main-section">
+        <div class="heading">
+          <h1>Voice Recorder</h1>
+          <p>Try Recording Your Sound Now</p>
+        </div>
+        <style>
+          .collapsed #sidenav {
+            width: 48px;
+            transition: 250ms ease-out;
+          }
+          .sidebar.small-size{
+            width: 70px;
+            transition: 250ms ease-out;
+          }
+          .collapsed #nav_collapse_btn {
+            left: 44px;
+            transition: 250ms ease-out;
+          }
+          .collapsed .external_link {
+            display: none;
+          }
+          .collapsed .sidenav_link {
+            width: 22px;
+          }
+          .collapsed h3 {
+            display: none;
+          }
+          #page_wrapper.collapsed {
+            grid-template-columns: 68px 1fr;
+            transition: 250ms ease-out;
+          }
+
+          .recording-wrapper{
+            display: flex;
+            width: 100%;
+            border: 2px solid black;
+            border-radius: 40px;
+            padding: 40px;
+          }
+          .width-50{
+            width: 50%;
+          }
+          .divider{
+            height: auto;
+            border-right: 2px solid black;
+            width: 1px;
+          }
+        </style>
+        <div class="actions">
+          <div class="start-recoding-section" id="startRecordingSection">
+            <div class="recording-wrapper">
+              <div class="width-50">
+                <div class="action-logo">
+                  <img src="/static/img/main-icon.png" alt="" />
+                </div>
+                <div class="action-title">
+                  <div class="start-recording">
+                    <p>To start recording press the "<strong>Start Recording</strong>" button and start recording</p>
+                    <button class="button -blue center" id="recordButton">
+                      Start Recording
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="divider"></div>
+              <div class="width-50">
+                <div class="action-logo">
+                  <img src="/static/img/upload-icon.png" alt="" />
+                </div>
+                <div class="action-title">
+                  <div class="start-recording">
+                    <form
+                    action="{% url "make-prediction" %}"
+                    method="post"
+                    enctype="multipart/form-data">
+                    {% csrf_token %}
+                      <div class="recording-file-wrap">
+                        <!-- <input type="file" name="upload_file" id="upload_file" required /> -->
+                        <div class="box">
+                          <input type="file" name="upload_file" id="upload_file" class="inputfile inputfile-2" required />
+                          <label for="upload_file"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+                              <path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z" />
+                            </svg> <span>Choose a file&hellip;</span></label>
+                        </div>
+                        <br>
+                        <button type="submit" class="button -green">
+                          Upload Recoding
+                        </button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+
+          <div
+            class="running-recoding-section display-none"
+            id="runningRecordingSection"
+          >
+            <div class="action-logo">
+              <svg
+                id="wave"
+                data-name="Layer 1"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 50 38.05"
+              >
+                <title>Audio Wave</title>
+                <path
+                  id="Line_1"
+                  data-name="Line 1"
+                  d="M0.91,15L0.78,15A1,1,0,0,0,0,16v6a1,1,0,1,0,2,0s0,0,0,0V16a1,1,0,0,0-1-1H0.91Z"
+                />
+                <path
+                  id="Line_2"
+                  data-name="Line 2"
+                  d="M6.91,9L6.78,9A1,1,0,0,0,6,10V28a1,1,0,1,0,2,0s0,0,0,0V10A1,1,0,0,0,7,9H6.91Z"
+                />
+                <path
+                  id="Line_3"
+                  data-name="Line 3"
+                  d="M12.91,0L12.78,0A1,1,0,0,0,12,1V37a1,1,0,1,0,2,0s0,0,0,0V1a1,1,0,0,0-1-1H12.91Z"
+                />
+                <path
+                  id="Line_4"
+                  data-name="Line 4"
+                  d="M18.91,10l-0.12,0A1,1,0,0,0,18,11V27a1,1,0,1,0,2,0s0,0,0,0V11a1,1,0,0,0-1-1H18.91Z"
+                />
+                <path
+                  id="Line_5"
+                  data-name="Line 5"
+                  d="M24.91,15l-0.12,0A1,1,0,0,0,24,16v6a1,1,0,0,0,2,0s0,0,0,0V16a1,1,0,0,0-1-1H24.91Z"
+                />
+                <path
+                  id="Line_6"
+                  data-name="Line 6"
+                  d="M30.91,10l-0.12,0A1,1,0,0,0,30,11V27a1,1,0,1,0,2,0s0,0,0,0V11a1,1,0,0,0-1-1H30.91Z"
+                />
+                <path
+                  id="Line_7"
+                  data-name="Line 7"
+                  d="M36.91,0L36.78,0A1,1,0,0,0,36,1V37a1,1,0,1,0,2,0s0,0,0,0V1a1,1,0,0,0-1-1H36.91Z"
+                />
+                <path
+                  id="Line_8"
+                  data-name="Line 8"
+                  d="M42.91,9L42.78,9A1,1,0,0,0,42,10V28a1,1,0,1,0,2,0s0,0,0,0V10a1,1,0,0,0-1-1H42.91Z"
+                />
+                <path
+                  id="Line_9"
+                  data-name="Line 9"
+                  d="M48.91,15l-0.12,0A1,1,0,0,0,48,16v6a1,1,0,1,0,2,0s0,0,0,0V16a1,1,0,0,0-1-1H48.91Z"
+                />
+              </svg>
+              <svg
+                id="wave"
+                data-name="Layer 1"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 50 38.05"
+              >
+                <title>Audio Wave</title>
+                <path
+                  id="Line_1"
+                  data-name="Line 1"
+                  d="M0.91,15L0.78,15A1,1,0,0,0,0,16v6a1,1,0,1,0,2,0s0,0,0,0V16a1,1,0,0,0-1-1H0.91Z"
+                />
+                <path
+                  id="Line_2"
+                  data-name="Line 2"
+                  d="M6.91,9L6.78,9A1,1,0,0,0,6,10V28a1,1,0,1,0,2,0s0,0,0,0V10A1,1,0,0,0,7,9H6.91Z"
+                />
+                <path
+                  id="Line_3"
+                  data-name="Line 3"
+                  d="M12.91,0L12.78,0A1,1,0,0,0,12,1V37a1,1,0,1,0,2,0s0,0,0,0V1a1,1,0,0,0-1-1H12.91Z"
+                />
+                <path
+                  id="Line_4"
+                  data-name="Line 4"
+                  d="M18.91,10l-0.12,0A1,1,0,0,0,18,11V27a1,1,0,1,0,2,0s0,0,0,0V11a1,1,0,0,0-1-1H18.91Z"
+                />
+                <path
+                  id="Line_5"
+                  data-name="Line 5"
+                  d="M24.91,15l-0.12,0A1,1,0,0,0,24,16v6a1,1,0,0,0,2,0s0,0,0,0V16a1,1,0,0,0-1-1H24.91Z"
+                />
+                <path
+                  id="Line_6"
+                  data-name="Line 6"
+                  d="M30.91,10l-0.12,0A1,1,0,0,0,30,11V27a1,1,0,1,0,2,0s0,0,0,0V11a1,1,0,0,0-1-1H30.91Z"
+                />
+                <path
+                  id="Line_7"
+                  data-name="Line 7"
+                  d="M36.91,0L36.78,0A1,1,0,0,0,36,1V37a1,1,0,1,0,2,0s0,0,0,0V1a1,1,0,0,0-1-1H36.91Z"
+                />
+                <path
+                  id="Line_8"
+                  data-name="Line 8"
+                  d="M42.91,9L42.78,9A1,1,0,0,0,42,10V28a1,1,0,1,0,2,0s0,0,0,0V10a1,1,0,0,0-1-1H42.91Z"
+                />
+                <path
+                  id="Line_9"
+                  data-name="Line 9"
+                  d="M48.91,15l-0.12,0A1,1,0,0,0,48,16v6a1,1,0,1,0,2,0s0,0,0,0V16a1,1,0,0,0-1-1H48.91Z"
+                />
+              </svg>
+              <svg
+                id="wave"
+                data-name="Layer 1"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 50 38.05"
+              >
+                <title>Audio Wave</title>
+                <path
+                  id="Line_1"
+                  data-name="Line 1"
+                  d="M0.91,15L0.78,15A1,1,0,0,0,0,16v6a1,1,0,1,0,2,0s0,0,0,0V16a1,1,0,0,0-1-1H0.91Z"
+                />
+                <path
+                  id="Line_2"
+                  data-name="Line 2"
+                  d="M6.91,9L6.78,9A1,1,0,0,0,6,10V28a1,1,0,1,0,2,0s0,0,0,0V10A1,1,0,0,0,7,9H6.91Z"
+                />
+                <path
+                  id="Line_3"
+                  data-name="Line 3"
+                  d="M12.91,0L12.78,0A1,1,0,0,0,12,1V37a1,1,0,1,0,2,0s0,0,0,0V1a1,1,0,0,0-1-1H12.91Z"
+                />
+                <path
+                  id="Line_4"
+                  data-name="Line 4"
+                  d="M18.91,10l-0.12,0A1,1,0,0,0,18,11V27a1,1,0,1,0,2,0s0,0,0,0V11a1,1,0,0,0-1-1H18.91Z"
+                />
+                <path
+                  id="Line_5"
+                  data-name="Line 5"
+                  d="M24.91,15l-0.12,0A1,1,0,0,0,24,16v6a1,1,0,0,0,2,0s0,0,0,0V16a1,1,0,0,0-1-1H24.91Z"
+                />
+                <path
+                  id="Line_6"
+                  data-name="Line 6"
+                  d="M30.91,10l-0.12,0A1,1,0,0,0,30,11V27a1,1,0,1,0,2,0s0,0,0,0V11a1,1,0,0,0-1-1H30.91Z"
+                />
+                <path
+                  id="Line_7"
+                  data-name="Line 7"
+                  d="M36.91,0L36.78,0A1,1,0,0,0,36,1V37a1,1,0,1,0,2,0s0,0,0,0V1a1,1,0,0,0-1-1H36.91Z"
+                />
+                <path
+                  id="Line_8"
+                  data-name="Line 8"
+                  d="M42.91,9L42.78,9A1,1,0,0,0,42,10V28a1,1,0,1,0,2,0s0,0,0,0V10a1,1,0,0,0-1-1H42.91Z"
+                />
+                <path
+                  id="Line_9"
+                  data-name="Line 9"
+                  d="M48.91,15l-0.12,0A1,1,0,0,0,48,16v6a1,1,0,1,0,2,0s0,0,0,0V16a1,1,0,0,0-1-1H48.91Z"
+                />
+              </svg>
+              <svg
+                id="wave"
+                data-name="Layer 1"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 50 38.05"
+              >
+                <title>Audio Wave</title>
+                <path
+                  id="Line_1"
+                  data-name="Line 1"
+                  d="M0.91,15L0.78,15A1,1,0,0,0,0,16v6a1,1,0,1,0,2,0s0,0,0,0V16a1,1,0,0,0-1-1H0.91Z"
+                />
+                <path
+                  id="Line_2"
+                  data-name="Line 2"
+                  d="M6.91,9L6.78,9A1,1,0,0,0,6,10V28a1,1,0,1,0,2,0s0,0,0,0V10A1,1,0,0,0,7,9H6.91Z"
+                />
+                <path
+                  id="Line_3"
+                  data-name="Line 3"
+                  d="M12.91,0L12.78,0A1,1,0,0,0,12,1V37a1,1,0,1,0,2,0s0,0,0,0V1a1,1,0,0,0-1-1H12.91Z"
+                />
+                <path
+                  id="Line_4"
+                  data-name="Line 4"
+                  d="M18.91,10l-0.12,0A1,1,0,0,0,18,11V27a1,1,0,1,0,2,0s0,0,0,0V11a1,1,0,0,0-1-1H18.91Z"
+                />
+                <path
+                  id="Line_5"
+                  data-name="Line 5"
+                  d="M24.91,15l-0.12,0A1,1,0,0,0,24,16v6a1,1,0,0,0,2,0s0,0,0,0V16a1,1,0,0,0-1-1H24.91Z"
+                />
+                <path
+                  id="Line_6"
+                  data-name="Line 6"
+                  d="M30.91,10l-0.12,0A1,1,0,0,0,30,11V27a1,1,0,1,0,2,0s0,0,0,0V11a1,1,0,0,0-1-1H30.91Z"
+                />
+                <path
+                  id="Line_7"
+                  data-name="Line 7"
+                  d="M36.91,0L36.78,0A1,1,0,0,0,36,1V37a1,1,0,1,0,2,0s0,0,0,0V1a1,1,0,0,0-1-1H36.91Z"
+                />
+                <path
+                  id="Line_8"
+                  data-name="Line 8"
+                  d="M42.91,9L42.78,9A1,1,0,0,0,42,10V28a1,1,0,1,0,2,0s0,0,0,0V10a1,1,0,0,0-1-1H42.91Z"
+                />
+                <path
+                  id="Line_9"
+                  data-name="Line 9"
+                  d="M48.91,15l-0.12,0A1,1,0,0,0,48,16v6a1,1,0,1,0,2,0s0,0,0,0V16a1,1,0,0,0-1-1H48.91Z"
+                />
+              </svg>
+            </div>
+            <div class="action-title">
+              <div class="recording-elapsed-time">
+                <div class="recording-timer">
+                  <i
+                    class="red-recording-dot fa fa-circle"
+                    aria-hidden="true"
+                  ></i>
+                  <!-- <p class="elapsed-time" id="elapsedTime"></p> -->
+                  <div id="timerWrapper">
+                    <span id="timerMins">00</span>
+                    <span>:</span>
+                    <span id="timerSeconds">00</span>
+                  </div>
+                  <span style="font-weight: 900">&nbsp; / &nbsp;</span
+                  ><span>05:00</span>
+                </div>
+                <button
+                  class="button -salmon center"
+                  id="cancelButton"
+                  disabled
+                >
+                  Cancel
+                </button>
+                <button
+                  class="button -flower center"
+                  style="color: #f3f3f3"
+                  id="stopButton"
+                  disabled
+                >
+                  Stop
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="after-recoding-section" id="afterRecordingSection">
+            <div class="recording-list">
+              <ol id="recordingsList"></ol>
+            </div>
+
+            <div class="prediction-operation" id="predictionOperation">
+              <form
+                action="{% url "make-prediction" %}"
+                method="post"
+                enctype="multipart/form-data"
+              >
+                {% csrf_token %}
+                <div class="recording-file-wrap">
+                  <input
+                    type="file"
+                    name="recording_file"
+                    id="recordingFile"
+                    hidden
+                  />
+                  <button type="submit" class="button -green">
+                    Make Prediction
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="recording-status">
+            <div
+              class="text-indication-of-audio-playing-container display-none"
+              id="recording_processing"
+            >
+              <p class="text-indication-of-audio-playing">
+                Voice record is processing <span>.</span><span>.</span
+                ><span>.</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="app-details">
+          <div class="card-body">
+            <div class="card">
+              <div class="title">
+                <h4>
+                  <i class="fa-solid fa-podcast"></i> Record Your Feelings
+                </h4>
+              </div>
+              <div class="description">
+                <p>
+                  This feature will record your voice and it will pass that data to the AI model to predict the Bengali accent that your voice contains.
+                </p>
+              </div>
+            </div>
+            <div class="card">
+              <div class="title">
+                <h4>
+                  <i class="fa-solid fa-arrow-trend-up"></i> Enhance Audio
+                </h4>
+              </div>
+              <div class="description">
+                <p>
+                  The recorded audio will be denoised by Dolby.io API and the the data will be passed on to the model.
+                </p>
+              </div>
+            </div>
+            <div class="card">
+              <div class="title">
+                <h4>
+                  <i class="fa-solid fa-handshake"></i> Contribute to Project
+                </h4>
+              </div>
+              <div class="description">
+                <p>
+                  This project records all the responces that user makes to a database.
+                  It will help us to create a learger dataset for future research.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/static/js/recorder.js"></script>
+    <script src="/static/js/audio-recording.js"></script>
+
+    <style>
+      /********** File Input Style starts here ********/
+      .inputfile {
+          width: 0.1px;
+          height: 0.1px;
+          opacity: 0;   
+          overflow: hidden;
+          position: absolute;
+          outline: none;
+          z-index: -1;
+      }
+
+      .inputfile + label {
+          max-width: 80%;
+          font-size: 1rem;
+          font-weight: 700;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          cursor: pointer;
+          display: inline-block;
+          overflow: hidden;
+          padding: 0.625rem 1.25rem;
+          outline: none;
+      }
+
+      .no-js .inputfile + label {
+          display: none;
+      }
+
+      .inputfile + label svg {
+          width: 1em;
+          height: 1em;
+          vertical-align: middle;
+          fill: currentColor;
+          margin-top: -0.25em;
+          margin-right: 0.25em;
+      }
+
+      /* Style 2 */
+      .inputfile-2 + label {
+          color: #1a975e;
+          border: 2px solid currentColor;
+      }
+
+      .inputfile-2:focus + label,
+      .inputfile-2.has-focus + label,
+      .inputfile-2 + label:hover {
+          color: #1a975e;
+      }
+      /* Style 2 */
+    </style>
+
+    <script>
+      (function (document, window, index) {
+        var inputs = document.querySelectorAll(".inputfile");
+        Array.prototype.forEach.call(inputs, function (input) {
+          var label = input.nextElementSibling,
+            labelVal = label.innerHTML;
+
+          input.addEventListener("change", function (e) {
+            var fileName = "";
+            if (this.files && this.files.length > 1)
+              fileName = (this.getAttribute("data-multiple-caption") || "").replace(
+                "{count}",
+                this.files.length
+              );
+            else fileName = e.target.value.split("\\").pop();
+
+            if (fileName) label.querySelector("span").innerHTML = fileName;
+            else label.innerHTML = labelVal;
+          });
+
+          // Firefox bug fix
+          input.addEventListener("focus", function () {
+            input.classList.add("has-focus");
+          });
+          input.addEventListener("blur", function () {
+            input.classList.remove("has-focus");
+          });
+        });
+      })(document, window, 0);
+    </script>
+
+  </body>
+</html>
